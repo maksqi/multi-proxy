@@ -1,17 +1,20 @@
 #!/usr/bin/env bash
 #
-# ipv6.sh - create HTTP / SOCKS5 proxies where every proxy leaves the server
-# from its own random IPv6 address (taken from the server's /64 subnet).
+# ipv4.sh - create HTTP / SOCKS5 proxies that use the server's IPv4 addresses.
 #
-# Shortcut for "multi-proxy.sh install ipv6"; it accepts the same commands
-# and options (see "ipv6.sh --help").
+# With several IPv4 addresses (additional IPs or a subnet from your provider)
+# the proxies are spread over them, so they leave the server from different
+# IPs. With a single address all proxies share it.
+#
+# Shortcut for "multi-proxy.sh install ipv4"; it accepts the same commands
+# and options (see "ipv4.sh --help").
 #
 # Quick start (as root):
-#   bash <(curl -fsSL https://raw.githubusercontent.com/maksqi/multi-proxy/main/ipv6.sh)
+#   bash <(curl -fsSL https://raw.githubusercontent.com/maksqi/multi-proxy/main/ipv4.sh)
 
 set -euo pipefail
 
-readonly MODE="ipv6"
+readonly MODE="ipv4"
 readonly ENGINE_URL="https://raw.githubusercontent.com/maksqi/multi-proxy/main/multi-proxy.sh"
 
 # Use multi-proxy.sh next to this file (cloned repository). When this script
@@ -24,7 +27,7 @@ if [[ ! -f $engine ]]; then
     || { echo "ERROR: could not download ${ENGINE_URL}" >&2; exit 1; }
 fi
 
-# "ipv6.sh [command] [options]" -> "multi-proxy.sh <command> ipv6 [options]".
+# "ipv4.sh [command] [options]" -> "multi-proxy.sh <command> ipv4 [options]".
 cmd=install
 if (( $# > 0 )) && [[ $1 != -* ]]; then
   cmd=$1
